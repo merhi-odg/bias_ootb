@@ -1,6 +1,6 @@
 import pandas as pd
 
-import modelop.monitors.volumetrics as volumetrics
+import modelop.monitors.performance as performance
 import modelop.schema.infer as infer
 
 
@@ -20,26 +20,34 @@ def init(job_json):
 
 
 # modelop.metrics
-def metrics(df_1, df_2):
+def metrics(dataframe):
 
     # Get identifier_columns from MONITORING_PARAMETERS
     identifier_columns = MONITORING_PARAMETERS["identifier_columns"]
 
     # Initialize Volumetrics monitor with 1st input DataFrame
-    volumetrics_monitor = volumetrics.VolumetricsMonitor(df_1)
+    model_evaluator = performance.ModelEvaluator(
+        dataframe=dataframe,
+        score_column=MONITORING_PARAMETERS["score_column"],
+        label_column=MONITORING_PARAMETERS["label_column"],
+    )
 
     # Compare DataFrames on identifier_columns
-    identifiers_comparison = volumetrics_monitor.identifiers_match_on_column(
-        df_2, identifier_columns
+    classification_metrics = model_evaluator.evaluate_performance(
+        pre_defined_metric="classification_metric"
     )
 
     result = {
         # Boolean top-level metric
-        "identifiers_match": identifiers_comparison["identifiers_match"],
+        "accuracy": classification_metrics["values"]["Accuracy"],
+        "precision": classification_metrics["values"]["precision"],
+        "recall": classification_metrics["values"]["recall"],
+        "auc": classification_metrics["values"]["auc"],
+        "f1_score": classification_metrics["values"]["f1_score"],
         
-        # Vanilla VolumetricsMonitor output
-        "volumetrics": [
-            identifiers_comparison
+        # Vanilla ModelEvaluator output
+        "performance": [
+            classification_metrics
         ]
     }
     yield result
