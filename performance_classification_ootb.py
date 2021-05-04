@@ -17,15 +17,16 @@ def init(job_json):
     MONITORING_PARAMETERS = infer.set_monitoring_parameters(
         schema_json=input_schema_definition, check_schema=True
     )
+    
+    print(MONITORING_PARAMETERS, flush=True)
 
 
 # modelop.metrics
 def metrics(dataframe):
+    
+    print(dataframe.columns, flush=True)
 
-    # Get identifier_columns from MONITORING_PARAMETERS
-    identifier_columns = MONITORING_PARAMETERS["identifier_columns"]
-
-    # Initialize Volumetrics monitor with 1st input DataFrame
+    # Initialize ModelEvaluator
     model_evaluator = performance.ModelEvaluator(
         dataframe=dataframe,
         score_column=MONITORING_PARAMETERS["score_column"],
