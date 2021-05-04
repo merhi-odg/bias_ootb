@@ -10,7 +10,7 @@ def init(job_json):
     # Extract input schema from job JSON
     input_schema_definition = infer.extract_input_schema(job_json)
 
-    print("input_schema_definition", input_schema_definition, flush=True)
+    # print("input_schema_definition", input_schema_definition, flush=True)
     
     # Get monitoring parameters from schema
     global MONITORING_PARAMETERS
@@ -18,7 +18,9 @@ def init(job_json):
         schema_json=input_schema_definition, check_schema=True
     )
     
-    print(MONITORING_PARAMETERS, flush=True)
+    print("label_column: ", MONITORING_PARAMETERS["label_column"], flush=True)
+    print("score_column: ", MONITORING_PARAMETERS["score_column"], flush=True)
+
 
 
 # modelop.metrics
