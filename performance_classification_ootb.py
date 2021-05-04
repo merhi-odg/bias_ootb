@@ -37,7 +37,7 @@ def metrics(dataframe):
 
     # Compare DataFrames on identifier_columns
     classification_metrics = model_evaluator.evaluate_performance(
-        pre_defined_metric="classification_metric"
+        pre_defined_metric="classification_metrics"
     )
 
     result = {
