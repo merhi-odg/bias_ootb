@@ -43,10 +43,10 @@ def metrics(dataframe):
     result = {
         # Boolean top-level metric
         "accuracy": classification_metrics["values"]["Accuracy"],
-        "precision": classification_metrics["values"]["precision"],
-        "recall": classification_metrics["values"]["recall"],
-        "auc": classification_metrics["values"]["auc"],
-        "f1_score": classification_metrics["values"]["f1_score"],
+        "precision": classification_metrics["values"]["Precision"],
+        "recall": classification_metrics["values"]["Recall"],
+        "auc": classification_metrics["values"]["AUC"],
+        "f1_score": classification_metrics["values"]["F1"],
         
         # Vanilla ModelEvaluator output
         "performance": [
