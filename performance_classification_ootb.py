@@ -9,8 +9,6 @@ def init(job_json):
     
     # Extract input schema from job JSON
     input_schema_definition = infer.extract_input_schema(job_json)
-
-    # print("input_schema_definition", input_schema_definition, flush=True)
     
     # Get monitoring parameters from schema
     global MONITORING_PARAMETERS
@@ -20,7 +18,6 @@ def init(job_json):
     
     print("label_column: ", MONITORING_PARAMETERS["label_column"], flush=True)
     print("score_column: ", MONITORING_PARAMETERS["score_column"], flush=True)
-
 
 
 # modelop.metrics
@@ -35,13 +32,13 @@ def metrics(dataframe):
         label_column=MONITORING_PARAMETERS["label_column"],
     )
 
-    # Compare DataFrames on identifier_columns
+    # Compute classification metrics
     classification_metrics = model_evaluator.evaluate_performance(
         pre_defined_metrics="classification_metrics"
     )
 
     result = {
-        # Boolean top-level metric
+        # Top-level metrics
         "accuracy": classification_metrics["values"]["Accuracy"],
         "precision": classification_metrics["values"]["Precision"],
         "recall": classification_metrics["values"]["Recall"],
